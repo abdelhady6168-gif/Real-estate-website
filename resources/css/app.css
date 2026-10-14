@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* Class-based dark mode (toggled by resources/js/theme.js), not just OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;
+
+    --color-cream: #f3f1e8;
+    --color-ink: #17181c;
+    --color-gold: #b8863c;
+    --color-border: #e3e0d3;
+
+    /* --color-brand and --color-surface are deliberately NOT overridden below —
+       see the .dark block. They exist so elements that are already correctly
+       dark in light mode (brand buttons/badges/footer — bg-brand) and plain
+       card surfaces (bg-surface) can each adapt independently of --color-ink,
+       which switches meaning below from "near-black" to "the current
+       adaptive foreground/border color". */
+    --color-brand: #17181c;
+    --color-surface: #ffffff;
+}
+
+/*
+ * Dark theme. --color-ink and --color-border are the tokens almost every
+ * Nakheel view already uses for text/borders (text-ink, border-ink,
+ * border-border) and --color-cream is the page background — flipping these
+ * three here re-colors the vast majority of the public site automatically,
+ * with no per-component changes. --color-surface (bg-surface, replacing the
+ * old literal bg-white on card/panel/dropdown surfaces) flips alongside them
+ * so text never ends up light-on-light or dark-on-dark. --color-brand
+ * (bg-brand, replacing the old literal bg-ink used on buttons/badges/the
+ * footer) stays fixed — those already read correctly in both themes today.
+ */
+.dark {
+    --color-cream: #121317;
+    --color-ink: #f3f1e8;
+    --color-border: #3a3b45;
+    --color-gold: #d4a668;
+    --color-surface: #1c1d23;
+
+    /* Tells the browser to use its own dark UA styling for native form
+       controls (text/date/number inputs, <select>, checkboxes, scrollbars)
+       that aren't given an explicit background elsewhere — mainly the many
+       plain <input>/<select>/<textarea> fields across the admin forms,
+       which would otherwise stay solid white on a dark page. */
+    color-scheme: dark;
+}
